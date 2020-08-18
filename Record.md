@@ -273,3 +273,35 @@ def index(request):
 ```
 
 
+## Django と chart.js でグラフ描画
+
+https://djangobrothers.com/blogs/chartjs_usage/
+
+## Template
+
+* 変数
+{{ 変数名 }}
+
+* if
+{% if 条件1 %}
+  <p>条件1は真です</p>
+{% elif 条件2 %}
+  <p>条件2は真です</p>
+{% else %}
+  <p>条件1も条件2も偽です</p>
+{% endif %}
+
+{% if 条件 and 条件2 %}
+{% if 条件1 or 条件2 %}
+{% if not 条件1 %}
+
+{% for item in items %}
+  <p>{{ item }}</p>
+  <hr>
+{% endfor %}
+
+* include
+{% include "{挿入したHTMLへのパス}" %}
+で、他の template を読み込める
+
+https://www.gesource.jp/programming/python/django/005.html
