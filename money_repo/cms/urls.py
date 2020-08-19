@@ -5,6 +5,10 @@ from . import views
 urlpatterns = [
     # ex: /polls/
     path('', views.index, name='index'),
+    path('year', views.year, name='year'),
+    path('yearly', views.yearly, name='yearly'),
+    path('month', views.month, name='month'),
+    path('monthly', views.monthly, name='monthly'),
     # ex: /polls/5/
     path('<int:question_id>/', views.detail, name='detail'),
     # ex: /polls/5/results/

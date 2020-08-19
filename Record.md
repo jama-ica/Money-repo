@@ -371,4 +371,9 @@ index.html を展開
 </html>
 ```
 
-https://www.gesource.jp/programming/python/django/005.html
+## django-debug-toolbar
+https://e-tec-memo.herokuapp.com/article/121/
+
+* install
+pip install django-debug-toolbar
+

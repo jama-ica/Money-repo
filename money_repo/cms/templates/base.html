@@ -1,25 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title>{% block title %}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+	<title>django</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
 </head>
 <body>
-<header>
-    {% block header %}
-    <p>ヘッダーの要素</p>
-    {% endblock %}
-</header>
 
-{% block body %}
-<p>ボディーの要素</p>
-{% endblock %}
+	<!--Title-->
+	<header>
+		<section class="hero is-primary">
+			<div class="hero-body">
+				<div class="container">
+					<h1 class="title">
+						Title
+					</h1>
+					<h2 class="subtitle">
+						{% block title %}{% endblock %}
+					</h2>
+				</div>
+			</div>
+		</section>
+	</header>
 
-<footer>
-    {% block footer %}
-    <p>フッターの要素</p>
-    {% endblock %}
-</footer>
+	<div class="columns ">
+		
+		<!--Side Bar-->
+		<div class="column is-one-quarter mt-3 ">
+			<aside class="menu ml-2">
+				<ul class="menu-list ">
+					<li><a href="{% url 'index' %}">Home</a></li>
+					<li><a href="{% url 'yearly' %}">Yearly</a></li>
+					<li><a href="{% url 'year' %}">Year</a></li>
+					<li><a href="{% url 'monthly' %}">Monthly</a></li>
+					<li><a href="{% url 'month' %}">Month</a></li>
+				</ul>
+			</aside>
+		</div>
+
+		<!--Content-->
+		<div class="column mt-3">
+			{% block body %}
+			{% endblock %}
+		</div>
+
+	</div>
+
 </body>
 </html>
