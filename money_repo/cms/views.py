@@ -32,6 +32,12 @@ def month(request):
 def monthly(request):
 	return render(request, 'monthly.html')
 
+def importBankbook(request):
+	return render(request, 'import/bankbook.html')
+
+def importDetail(request):
+	return render(request, 'import/detail.html')
+
 # def index(request):
 #     latest_question_list = Question.objects.order_by('-pub_date')[:5]
 #     context = {'latest_question_list': latest_question_list}

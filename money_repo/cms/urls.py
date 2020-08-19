@@ -9,6 +9,10 @@ urlpatterns = [
     path('yearly', views.yearly, name='yearly'),
     path('month', views.month, name='month'),
     path('monthly', views.monthly, name='monthly'),
+
+    path('bankbook', views.importBankbook, name='bankbook'),
+    path('detail', views.importDetail, name='detail'),
+
     # ex: /polls/5/
     path('<int:question_id>/', views.detail, name='detail'),
     # ex: /polls/5/results/
