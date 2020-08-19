@@ -434,3 +434,32 @@ https://e-tec-memo.herokuapp.com/article/121/
 * install
 pip install django-debug-toolbar
 
+## Model Field
+https://qiita.com/okoppe8/items/a1149b2be54441951de1#null%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6
+* ForeignKey
+    on_delete 参照先がdeleteされた時、自身も削除するか
+    CASCADE    削除
+    PROTECT    参照先を削除できなくする
+    SET_NULL
+    SET_DEFAULT
+    SET    自由にセット
+    DO_NOTHING    何もしない
+* CharField
+文字数指定、パフォーマンス良
+    - URLField
+    - EmailField
+    - UUIDField
+    - FilePathField
+* TextField
+文字数フリー、パフォーマンス悪
+* IntegerField
+    IntegerField    -2147483648	2147483647
+    PositiveIntegerField    0	2147483647
+    PositiveSmallIntegerField    0	32767
+* FloatField
+* DecimalField
+* BooleanField
+* NullBooleanField
+* DateTimeField
+    TimeField
+

@@ -1,9 +1,18 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render
-from .models import Question
-
-
+from .models import BankPayee
+from .models import BankPaysource
+from .models import Bank
+from .models import BankShop
+from .models import BankBook
+from .models import BankBookIn
+from .models import BankBookOut
+from .models import IncomeKind
+from .models import Income
+from .models import ExpenseKind
+from .models import PayMethod
+from .models import Expense
 
 def index(request):
     return render(request, 'index.html')
