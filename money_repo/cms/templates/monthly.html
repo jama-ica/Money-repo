@@ -3,5 +3,74 @@
 {% block title %}Monthly{% endblock %}
 
 {% block body %}
-<p>Monthlyページです</p>
+<div>
+
+	<div class="select">
+		<select>
+			<option></option>
+			<option>With options</option>
+		</select>
+	</div>
+</div>
+
+  <!--Overview-->
+<nav class="level">
+	<div class="level-item has-text-right">
+		<div>
+		<p class="heading">Income</p>
+		<p class="title has-text-info">3,456</p>
+		</div>
+	</div>
+	<div class="level-item has-text-right ">
+		<div>
+		<p class="heading">Revenue </p>
+		<p class="title has-text-info">123</p>
+		</div>
+	</div>
+	<div class="level-item has-text-right">
+		<div>
+		<p class="heading">Expenses</p>
+		<p class="title has-text-danger">456K</p>
+		</div>
+	</div>
+</nav>
+
+<!--Table-->
+<div class="table-container">
+	<table class="table table is-striped">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Amont</th>
+				<th>Date</th>
+				<th>Kind</th>
+				<th>Note</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<th>1</th>
+				<td>38</td>
+				<td>38</td>
+				<td>23</td>
+				<td>12</td>
+			</tr>
+			<tr>
+				<th>1</th>
+				<td>38</td>
+				<td>38</td>
+				<td>23</td>
+				<td>12</td>
+			</tr>
+			<tr>
+				<th>1</th>
+				<td>38</td>
+				<td>23</td>
+				<td>23</td>
+				<td>12</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
 {% endblock%}

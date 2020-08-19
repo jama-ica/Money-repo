@@ -309,7 +309,7 @@ https://e-tec-memo.herokuapp.com/article/67/
 * block, extends
 
 base.html
-```python
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -338,7 +338,7 @@ base.html
 ```
 
 index.html
-```python
+```html
 {% extends "base.html" %}
 
 {% block title %}トップページ{% endblock %}
@@ -349,7 +349,7 @@ index.html
 ```
 
 index.html を展開
-```python
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -370,6 +370,63 @@ index.html を展開
 </body>
 </html>
 ```
+
+## ページ移動
+
+```html
+	<li><a href="index.html">Home</a></li>
+	<li><a href="yearly.html">Yearly</a></li>
+	<li><a href="year.html">Year</a></li>
+	<li><a href="monthly.html">Monthly</a></li>
+	<li><a href="month.html">Month</a></li>
+```
+
+urls.py
+```python
+urlpatterns = [
+    # ex: /polls/
+    path('', views.index, name='index'),
+    path('year', views.year, name='year'),
+    path('yearly', views.yearly, name='yearly'),
+    path('month', views.month, name='month'),
+    path('monthly', views.monthly, name='monthly'),
+```
+
+views.py
+```python
+def index(request):
+    return render(request, 'index.html')
+
+def year(request):
+    return render(request, 'year.html')
+
+def yearly(request):
+    return render(request, 'yearly.html')
+
+def month(request):
+    return render(request, 'month.html')
+
+def monthly(request):
+    return render(request, 'monthly.html')
+```
+
+## Font Awesome
+
+アカウント登録が必須
+https://www.webcreatorbox.com/webinfo/font-awesome
+
+https://fontawesome.com/kits
+から head に link するべき js を取得して貼り付けれOK
+
+bulma で fontawesome icon を表示
+```python
+<span class="icon">
+	<i class="fas fa-home"></i>
+</span>
+```
+
+## DB操作
+https://e-tec-memo.herokuapp.com/article/10/
 
 ## django-debug-toolbar
 https://e-tec-memo.herokuapp.com/article/121/
