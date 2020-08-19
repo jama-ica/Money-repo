@@ -279,6 +279,8 @@ https://djangobrothers.com/blogs/chartjs_usage/
 
 ## Template
 
+https://e-tec-memo.herokuapp.com/article/67/
+
 * 変数
 {{ 変数名 }}
 
@@ -303,5 +305,70 @@ https://djangobrothers.com/blogs/chartjs_usage/
 * include
 {% include "{挿入したHTMLへのパス}" %}
 で、他の template を読み込める
+
+* block, extends
+
+base.html
+```python
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<header>
+    {% block header %}
+    <p>ヘッダーの要素</p>
+    {% endblock %}
+</header>
+
+{% block body %}
+<p>ボディーの要素</p>
+{% endblock %}
+
+<footer>
+    {% block footer %}
+    <p>フッターの要素</p>
+    {% endblock %}
+</footer>
+</body>
+</html>
+```
+
+index.html
+```python
+{% extends "base.html" %}
+
+{% block title %}トップページ{% endblock %}
+
+{% block body %}
+<p>トップページです</p>
+{% endblock%}
+```
+
+index.html を展開
+```python
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>トップページ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<header>
+    <p>ヘッダーの要素</p>
+</header>
+
+<p>トップページです</p>
+
+<footer>
+    <p>フッターの要素</p>
+</footer>
+</body>
+</html>
+```
 
 https://www.gesource.jp/programming/python/django/005.html
