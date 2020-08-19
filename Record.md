@@ -463,3 +463,28 @@ https://qiita.com/okoppe8/items/a1149b2be54441951de1#null%E3%82%AA%E3%83%97%E3%8
 * DateTimeField
     TimeField
 
+
+### マイグレーション
+python manage.py makemigrations cms
+python manage.py migrate
+
+## Admin ページのカスタマイズ
+admin.py
+```python
+from django.contrib import admin
+
+from cms.models import Book, Impression
+
+class BookAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'publisher', 'page',)  # 一覧に出したい項目
+    list_display_links = ('id', 'name',)  # 修正リンクでクリックできる項目
+
+admin.site.register(Book, BookAdmin)
+
+class ImpressionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'comment',)
+    list_display_links = ('id', 'comment',)
+    raw_id_fields = ('book',)   # 外部キーをプルダウンにしない（データ件数が増加時のタイムアウトを予防）
+
+admin.site.register(Impression, ImpressionAdmin)
+```

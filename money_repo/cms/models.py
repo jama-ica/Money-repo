@@ -1,22 +1,25 @@
 from django.db import models
 
 # Bank Pay Target
+class Bank(models.Model):
+	name = models.CharField(blank=False, max_length=64)
+	note = models.CharField(blank=True, max_length=256, editable=True)
+
+	def __str__(self):
+		return self.name
+
+class BankShop(models.Model):
+	bank = models.ForeignKey(Bank, on_delete=models.CASCADE)
+	name = models.CharField(blank=False, max_length=64)
+	bank_shop_number = models.PositiveSmallIntegerField(blank=False)
+	note = models.CharField(blank=True, max_length=256, editable=True)
+
 class BankPayee(models.Model):
 	name = models.CharField(blank=False, max_length=64, default='')
 	note = models.CharField(blank=True, max_length=256, default='', editable=True)
 
 class BankPaysource(models.Model):
 	name = models.CharField(blank=False, max_length=64)
-	note = models.CharField(blank=True, max_length=256, editable=True)
-
-class Bank(models.Model):
-	name = models.CharField(blank=False, max_length=64)
-	note = models.CharField(blank=True, max_length=256, editable=True)
-
-class BankShop(models.Model):
-	bank = models.ForeignKey(Bank, on_delete=models.CASCADE)
-	name = models.CharField(blank=False, max_length=64)
-	bank_shop_number = models.PositiveSmallIntegerField(blank=False)
 	note = models.CharField(blank=True, max_length=256, editable=True)
 
 class BankBook(models.Model):
