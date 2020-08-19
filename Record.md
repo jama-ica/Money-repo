@@ -488,3 +488,18 @@ class ImpressionAdmin(admin.ModelAdmin):
 
 admin.site.register(Impression, ImpressionAdmin)
 ```
+
+
+## 変数表示
+
+views.py
+```python
+def year(request):
+	context = {'year' : 2020}
+	return render(request, 'year.html', context)
+```
+
+year.html
+```html
+<p>year is {{ year }}</p>
+```

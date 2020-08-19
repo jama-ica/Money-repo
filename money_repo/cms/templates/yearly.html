@@ -3,5 +3,8 @@
 {% block title %}Yearly{% endblock %}
 
 {% block body %}
-<p>Yearlyページです</p>
+{% for year in years %}
+  <p>{{ year }}</p>
+  <hr>
+{% endfor %}
 {% endblock%}

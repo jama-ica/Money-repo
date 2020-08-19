@@ -15,19 +15,22 @@ from .models import PayMethod
 from .models import Expense
 
 def index(request):
-    return render(request, 'index.html')
+	return render(request, 'index.html')
 
 def year(request):
-    return render(request, 'year.html')
+	context = {'year' : 2020}
+	return render(request, 'year.html', context)
 
 def yearly(request):
-    return render(request, 'yearly.html')
+	years = [2010, 2011, 2012, 2020]
+	context = {'years' : years}
+	return render(request, 'yearly.html', context)
 
 def month(request):
-    return render(request, 'month.html')
+	return render(request, 'month.html')
 
 def monthly(request):
-    return render(request, 'monthly.html')
+	return render(request, 'monthly.html')
 
 # def index(request):
 #     latest_question_list = Question.objects.order_by('-pub_date')[:5]
@@ -36,11 +39,11 @@ def monthly(request):
 
 
 def detail(request, question_id):
-    return HttpResponse("You're looking at question %s." % question_id)
+	return HttpResponse("You're looking at question %s." % question_id)
 
 def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
+	response = "You're looking at the results of question %s."
+	return HttpResponse(response % question_id)
 
 def vote(request, question_id):
-    return HttpResponse("You're voting on question %s." % question_id)
+	return HttpResponse("You're voting on question %s." % question_id)
