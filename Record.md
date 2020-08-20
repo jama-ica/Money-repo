@@ -523,3 +523,8 @@ df = read_csv(filename, header=None, names=['user_id', 'name'])
 ## form の値を受け取り
 https://qiita.com/nab/items/e32cde1643a010dfacb9
 
+ChoiceField に view で値を追加
+https://qiita.com/y_nishimura/items/1427a21967813de26237#%E9%81%B8%E6%8A%9E%E8%82%A2%E3%82%92%E5%BE%8C%E3%81%8B%E3%82%89%E8%BF%BD%E5%8A%A0%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95
+
+modelChoiceField
+

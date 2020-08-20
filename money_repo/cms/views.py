@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.views import View
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . import forms
 # 
 import datetime
@@ -21,7 +21,6 @@ from .models import ExpenseKind
 from .models import PayMethod
 from .models import Expense
 
-
 def index(request):
 	return render(request, 'index.html')
 
@@ -40,19 +39,36 @@ def month(request):
 def monthly(request):
 	return render(request, 'monthly.html')
 
+
 #def importBankbook(request):
 #	banks = Bank.objects.all()
 #	context = {'banks' : banks, 'bankBooks' : []}
 #	return render(request, 'import/bankbook.html', context)
 def importBankbook(request):
-	form = forms.SampleChoiceForm()
-	banks = Bank.objects.all()
-	context = {
-		'form': form,
-		'banks' : banks,
-		'bankBooks' : [],
-	}
-	return render(request, 'import/bankbook.html', context)
+	if request.method == 'POST':
+		if 'csv' in request.FILES:
+			form_data = TextIOWrapper(request.FILES['csv'].file, encoding='utf-8')
+			csv_file = csv.reader(form_data)
+			header = next(csv_file)  # skip header
+
+			for line in csv_file:
+				bankBookIn = BankBookIn()
+				#TODO
+				bankBookIn.bank_book = BankBook.objects.get(id=1)
+				#TODO
+				bankBookIn.bank_payee = BankPayee.objects.get(id=1)
+				bankBookIn.amount = line[1]
+				bankBookIn.date = datetime.datetime.now()
+				bankBookIn.note = request.POST['select'] #str(line[4])
+				bankBookIn.save()
+
+		return redirect('monthly')
+	else:
+		form = forms.SampleChoiceForm()
+		context = {
+			'form': form,
+		}
+		return render(request, 'import/bankbook.html', context)
 
 def importDetail(request):
 	return render(request, 'import/detail.html')
@@ -99,12 +115,12 @@ def upload(request):
 
 
 
-class SampleChoiceView(View):
-	def get(self, request):
-		form = forms.SampleChoiceForm()
-		context = {
-			'form': form
-		}
-		return render(request, 'choice_sample.html', context)
+#class SampleChoiceView(View):
+#	def get(self, request):
+#		form = forms.SampleChoiceForm()
+#		context = {
+#			'form': form
+#		}
+#		return render(request, 'choice_sample.html', context)
 
-sample_choice_view = SampleChoiceView.as_view()
+#sample_choice_view = SampleChoiceView.as_view()
