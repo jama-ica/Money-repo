@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.template import loader
+from django.views import View
 from django.shortcuts import render
+from . import forms
 # 
 import datetime
 import csv
@@ -38,9 +40,18 @@ def month(request):
 def monthly(request):
 	return render(request, 'monthly.html')
 
+#def importBankbook(request):
+#	banks = Bank.objects.all()
+#	context = {'banks' : banks, 'bankBooks' : []}
+#	return render(request, 'import/bankbook.html', context)
 def importBankbook(request):
+	form = forms.SampleChoiceForm()
 	banks = Bank.objects.all()
-	context = {'banks' : banks}
+	context = {
+		'form': form,
+		'banks' : banks,
+		'bankBooks' : [],
+	}
 	return render(request, 'import/bankbook.html', context)
 
 def importDetail(request):
@@ -78,10 +89,22 @@ def upload(request):
 			bankBookIn.bank_payee = BankPayee.objects.get(id=1)
 			bankBookIn.amount = line[1]
 			bankBookIn.date = datetime.datetime.now()
-			bankBookIn.note = str(line[4])
+			bankBookIn.note = request.POST['bank'] #str(line[4])
 			bankBookIn.save()
 
-		return render(request, 'YpurApp/upload.html')
+		return importBankbook(request)
 
 	else:
-		return render(request, 'YourApp/upload.html')
+		return importBankbook(request)
+
+
+
+class SampleChoiceView(View):
+	def get(self, request):
+		form = forms.SampleChoiceForm()
+		context = {
+			'form': form
+		}
+		return render(request, 'choice_sample.html', context)
+
+sample_choice_view = SampleChoiceView.as_view()

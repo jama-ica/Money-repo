@@ -520,3 +520,6 @@ df = read_csv(filename, header=0)
 df = read_csv(filename, header=None, names=['user_id', 'name'])
 
 
+## form の値を受け取り
+https://qiita.com/nab/items/e32cde1643a010dfacb9
+

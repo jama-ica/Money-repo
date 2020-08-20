@@ -5,28 +5,66 @@
 
 {% block body %}
 <nav class="breadcrumb" aria-label="breadcrumbs">
+	
+	<!--Breadcrumbs-->
 	<ul>
 		<li><a href="{% url 'index' %}">Home</a></li>
 		<li class="is-active"><a href="#" aria-current="page">Import</a></li>
 		<li class="is-active"><a href="#" aria-current="page">Bank Book</a></li>
 	</ul>
 
-	<!--select bank-->
-	<div class="select">
-		<select>
-			<option></option>
-			{% for bank in banks %}
-			<option>{{ bank }}</option>
-			{% endfor %}
-		</select>
+	<!--Uploader-->
+	<div class="box">
+		<p class="title">Upload</p>
+		<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<!--select bank-->
+			<div class="select">
+				<select id="bank">
+					<option value="" style="display: none;">Select a Bank</option>
+					{% for bank in banks %}
+					<option>{{ bank }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<!--file loader-->
+			<input type="file" class="dropify" data-default-file="ファイルを選択してください" name="csv">
+			<button type="submit" class="button" name="button">アップロード</button>
+		</form>
 	</div>
-
-	<h3>アップロードするよ</h3>
-	<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+	
+	<form method="POST" aciton="">
+		{% for field in form %}
+		{{ field }}
+		{% endfor %}
 		{% csrf_token %}
-		<input type="file" class="dropify" data-default-file="ファイルを選択してください" name="csv">
-		<button type="submit" class="btn" name="button">アップロード</button>
 	</form>
+
+	<!--Table-->
+	<div class="table-container">
+		<table class="table table is-striped">
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>In</th>
+					<th>Out</th>
+					<th>Client</th>
+					<th>Balance</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for bankBook in bankBooks %}
+				<tr>
+					<td>bankBook.date</td>
+					<td>bankBook.in</td>
+					<td>bankBook.out</td>
+					<td>bankBook.client</td>
+					<td>bankBook.balance</td>
+				</tr>
+				{% endfor %}
+		</tbody>
+		</table>
+	</div>
 	
 </nav>
 {% endblock%}
