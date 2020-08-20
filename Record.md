@@ -425,8 +425,6 @@ bulma で fontawesome icon を表示
 </span>
 ```
 
-## DB操作
-https://e-tec-memo.herokuapp.com/article/10/
 
 ## django-debug-toolbar
 https://e-tec-memo.herokuapp.com/article/121/
@@ -503,3 +501,22 @@ year.html
 ```html
 <p>year is {{ year }}</p>
 ```
+
+
+## DB操作
+https://e-tec-memo.herokuapp.com/article/10/
+https://qiita.com/okoppe8/items/66a8747cf179a538355b#%E3%82%AF%E3%82%A8%E3%83%AA%E3%81%A8%E3%81%AF
+
+all = Entry.objects.all() #全件取得
+
+
+## CSV を import
+https://qiita.com/otera05/items/25d5bad759d39d61bc40
+
+### Python で csv を読み込み
+* ヘッダありCSV
+df = read_csv(filename, header=0)
+* ヘッダなしCSV
+df = read_csv(filename, header=None, names=['user_id', 'name'])
+
+

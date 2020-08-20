@@ -13,6 +13,8 @@ urlpatterns = [
     path('bankbook', views.importBankbook, name='bankbook'),
     path('detail', views.importDetail, name='detail'),
 
+	path('upload/', views.upload, name='upload'),
+
     # ex: /polls/5/
     path('<int:question_id>/', views.detail, name='detail'),
     # ex: /polls/5/results/

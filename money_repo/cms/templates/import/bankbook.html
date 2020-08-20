@@ -1,7 +1,32 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}トップページ{% endblock %}
+{% block title %}Import{% endblock %}
 
 {% block body %}
-<p>bank book</p>
+<nav class="breadcrumb" aria-label="breadcrumbs">
+	<ul>
+		<li><a href="{% url 'index' %}">Home</a></li>
+		<li class="is-active"><a href="#" aria-current="page">Import</a></li>
+		<li class="is-active"><a href="#" aria-current="page">Bank Book</a></li>
+	</ul>
+
+	<!--select bank-->
+	<div class="select">
+		<select>
+			<option></option>
+			{% for bank in banks %}
+			<option>{{ bank }}</option>
+			{% endfor %}
+		</select>
+	</div>
+
+	<h3>アップロードするよ</h3>
+	<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<input type="file" class="dropify" data-default-file="ファイルを選択してください" name="csv">
+		<button type="submit" class="btn" name="button">アップロード</button>
+	</form>
+	
+</nav>
 {% endblock%}

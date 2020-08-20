@@ -1,6 +1,11 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render
+# 
+import datetime
+import csv
+from io import TextIOWrapper, StringIO
+# 
 from .models import BankPayee
 from .models import BankPaysource
 from .models import Bank
@@ -13,6 +18,7 @@ from .models import Income
 from .models import ExpenseKind
 from .models import PayMethod
 from .models import Expense
+
 
 def index(request):
 	return render(request, 'index.html')
@@ -33,7 +39,9 @@ def monthly(request):
 	return render(request, 'monthly.html')
 
 def importBankbook(request):
-	return render(request, 'import/bankbook.html')
+	banks = Bank.objects.all()
+	context = {'banks' : banks}
+	return render(request, 'import/bankbook.html', context)
 
 def importDetail(request):
 	return render(request, 'import/detail.html')
@@ -53,3 +61,27 @@ def results(request, question_id):
 
 def vote(request, question_id):
 	return HttpResponse("You're voting on question %s." % question_id)
+
+
+
+def upload(request):
+	if 'csv' in request.FILES:
+		form_data = TextIOWrapper(request.FILES['csv'].file, encoding='utf-8')
+		csv_file = csv.reader(form_data)
+		header = next(csv_file)  # skip header
+
+		for line in csv_file:
+			bankBookIn = BankBookIn()
+			#TODO
+			bankBookIn.bank_book = BankBook.objects.get(id=1)
+			#TODO
+			bankBookIn.bank_payee = BankPayee.objects.get(id=1)
+			bankBookIn.amount = line[1]
+			bankBookIn.date = datetime.datetime.now()
+			bankBookIn.note = str(line[4])
+			bankBookIn.save()
+
+		return render(request, 'YpurApp/upload.html')
+
+	else:
+		return render(request, 'YourApp/upload.html')
