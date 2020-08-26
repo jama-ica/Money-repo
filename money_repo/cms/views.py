@@ -12,9 +12,9 @@ from .models import BankPayee
 from .models import BankPaysource
 from .models import Bank
 from .models import BankShop
-from .models import BankBook
-from .models import BankBookIn
-from .models import BankBookOut
+from .models import Bankbook
+from .models import BankbookIn
+from .models import BankbookOut
 from .models import IncomeKind
 from .models import Income
 from .models import ExpenseKind
@@ -39,11 +39,13 @@ def month(request):
 def monthly(request):
 	return render(request, 'monthly.html')
 
+def budget(request):
+	return render(request, 'budget.html')
 
 #def importBankbook(request):
 #	banks = Bank.objects.all()
-#	context = {'banks' : banks, 'bankBooks' : []}
-#	return render(request, 'import/bankbook.html', context)
+#	context = {'banks' : banks, 'Bankbooks' : []}
+#	return render(request, 'import/Bankbook.html', context)
 def importBankbook(request):
 	if request.method == 'POST':
 		if 'csv' in request.FILES:
@@ -52,15 +54,15 @@ def importBankbook(request):
 			header = next(csv_file)  # skip header
 
 			for line in csv_file:
-				bankBookIn = BankBookIn()
+				BankbookIn = BankbookIn()
 				#TODO
-				bankBookIn.bank_book = BankBook.objects.get(id=1)
+				BankbookIn.bank_book = Bankbook.objects.get(id=1)
 				#TODO
-				bankBookIn.bank_payee = BankPayee.objects.get(id=1)
-				bankBookIn.amount = line[1]
-				bankBookIn.date = datetime.datetime.now()
-				bankBookIn.note = request.POST['select'] #str(line[4])
-				bankBookIn.save()
+				BankbookIn.bank_payee = BankPayee.objects.get(id=1)
+				BankbookIn.amount = line[1]
+				BankbookIn.date = datetime.datetime.now()
+				BankbookIn.note = request.POST['select'] #str(line[4])
+				BankbookIn.save()
 
 		return redirect('monthly')
 	else:
@@ -68,10 +70,17 @@ def importBankbook(request):
 		context = {
 			'form': form,
 		}
-		return render(request, 'import/bankbook.html', context)
+		return render(request, 'import/Bankbook.html', context)
 
-def importDetail(request):
-	return render(request, 'import/detail.html')
+def importIncomes(request):
+	form = forms.SampleCalenderForm()
+	context = {
+		'form': form,
+	}
+	return render(request, 'import/incomes.html', context)
+
+def importExpenses(request):
+	return render(request, 'import/expenses.html')
 
 # def index(request):
 #     latest_question_list = Question.objects.order_by('-pub_date')[:5]
@@ -90,7 +99,7 @@ def vote(request, question_id):
 	return HttpResponse("You're voting on question %s." % question_id)
 
 
-
+#TODO rename import/bankbook 
 def upload(request):
 	if 'csv' in request.FILES:
 		form_data = TextIOWrapper(request.FILES['csv'].file, encoding='utf-8')
@@ -98,15 +107,15 @@ def upload(request):
 		header = next(csv_file)  # skip header
 
 		for line in csv_file:
-			bankBookIn = BankBookIn()
+			BankbookIn = BankbookIn()
 			#TODO
-			bankBookIn.bank_book = BankBook.objects.get(id=1)
+			BankbookIn.bank_book = Bankbook.objects.get(id=1)
 			#TODO
-			bankBookIn.bank_payee = BankPayee.objects.get(id=1)
-			bankBookIn.amount = line[1]
-			bankBookIn.date = datetime.datetime.now()
-			bankBookIn.note = request.POST['bank'] #str(line[4])
-			bankBookIn.save()
+			BankbookIn.bank_payee = BankPayee.objects.get(id=1)
+			BankbookIn.amount = line[1]
+			BankbookIn.date = datetime.datetime.now()
+			BankbookIn.note = request.POST['bank'] #str(line[4])
+			BankbookIn.save()
 
 		return importBankbook(request)
 

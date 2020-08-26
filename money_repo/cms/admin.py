@@ -5,9 +5,9 @@ from .models import Bank
 from .models import BankShop
 from .models import BankPayee
 from .models import BankPaysource
-from .models import BankBook
-from .models import BankBookIn
-from .models import BankBookOut
+from .models import Bankbook
+from .models import BankbookIn
+from .models import BankbookOut
 from .models import IncomeKind
 from .models import Income
 from .models import ExpenseKind
@@ -47,28 +47,28 @@ class BankPaysourceAdmin(admin.ModelAdmin):
 admin.site.register(BankPaysource, BankPaysourceAdmin)
 
 
-# BankBook
-class BankBookAdmin(admin.ModelAdmin):
+# Bankbook
+class BankbookAdmin(admin.ModelAdmin):
 	list_display = ('id', 'bank_shop', 'bank_book_number', 'note',)
 	list_display_links = ('id', 'bank_shop', 'bank_book_number', 'note',)
 
-admin.site.register(BankBook, BankBookAdmin)
+admin.site.register(Bankbook, BankbookAdmin)
 
 
-# BankBookIn
-class BankBookInAdmin(admin.ModelAdmin):
+# BankbookIn
+class BankbookInAdmin(admin.ModelAdmin):
 	list_display = ('id', 'bank_book', 'bank_payee', 'amount', 'date', 'note',)
 	list_display_links = ('id', 'bank_book', 'bank_payee', 'amount', 'date', 'note',)
 
-admin.site.register(BankBookIn, BankBookInAdmin)
+admin.site.register(BankbookIn, BankbookInAdmin)
 
 
-# BankBookOut
-class BankBookOutAdmin(admin.ModelAdmin):
+# BankbookOut
+class BankbookOutAdmin(admin.ModelAdmin):
 	list_display = ('id', 'bank_book', 'bank_paysource', 'amount', 'date', 'note',)
 	list_display_links = ('id', 'bank_book', 'bank_paysource', 'amount', 'date', 'note',)
 
-admin.site.register(BankBookOut, BankBookOutAdmin)
+admin.site.register(BankbookOut, BankbookOutAdmin)
 
 
 # IncomeKind

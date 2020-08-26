@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Import Expenses{% endblock %}
+
+{% block body %}
+<nav class="breadcrumb" aria-label="breadcrumbs">
+	<!--Breadcrumbs-->
+	<ul>
+		<li><a href="{% url 'index' %}">Home</a></li>
+		<li class="is-active"><a href="#" aria-current="page">Import</a></li>
+		<li class="is-active"><a href="#" aria-current="page">Expenses</a></li>
+	</ul>
+</nav>
+
+<!--Table-->
+<div class="table-container">
+	<table class="table table is-striped">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Year</th>
+				<th>Month</th>
+				<th>Total</th>
+				<th>Stock</th>
+				<th>Loan</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for record in records %}
+			<tr>
+				<td>record.id</td>
+				<td>record.year</td>
+				<td>record.month</td>
+				<td>record.total</td>
+				<td>record.stock</td>
+				<!--<td>record.in</td>
+				<td>record.out</td>
+				<td>record.revenue</td>-->
+				<td>record.loan</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% endblock%}

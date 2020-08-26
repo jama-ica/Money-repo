@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='BankBook',
+            name='Bankbook',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('bank_book_number', models.PositiveIntegerField()),
@@ -28,23 +28,23 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='BankBookIn',
+            name='BankbookIn',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('amount', models.PositiveIntegerField()),
                 ('date', models.DateTimeField()),
                 ('note', models.CharField(blank=True, max_length=256)),
-                ('bank_book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cms.bankbook')),
+                ('bank_book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cms.Bankbook')),
             ],
         ),
         migrations.CreateModel(
-            name='BankBookOut',
+            name='BankbookOut',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('amount', models.PositiveIntegerField()),
                 ('date', models.DateTimeField()),
                 ('note', models.CharField(blank=True, max_length=256)),
-                ('bank_book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cms.bankbook')),
+                ('bank_book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cms.Bankbook')),
             ],
         ),
         migrations.CreateModel(
@@ -80,7 +80,7 @@ class Migration(migrations.Migration):
                 ('amount', models.PositiveIntegerField()),
                 ('date', models.DateTimeField()),
                 ('note', models.CharField(blank=True, max_length=256)),
-                ('bank_book_in', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cms.bankbookin')),
+                ('bank_book_in', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cms.Bankbookin')),
             ],
         ),
         migrations.CreateModel(
@@ -98,7 +98,7 @@ class Migration(migrations.Migration):
                 ('amount', models.PositiveIntegerField()),
                 ('date', models.DateTimeField()),
                 ('note', models.CharField(blank=True, max_length=256)),
-                ('bank_book_in', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cms.bankbookin')),
+                ('bank_book_in', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cms.Bankbookin')),
             ],
         ),
         migrations.CreateModel(
@@ -139,17 +139,17 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='cms.paymethod'),
         ),
         migrations.AddField(
-            model_name='bankbookout',
+            model_name='Bankbookout',
             name='bank_paysource',
             field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='cms.bankpaysource'),
         ),
         migrations.AddField(
-            model_name='bankbookin',
+            model_name='Bankbookin',
             name='bank_payee',
             field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='cms.bankpayee'),
         ),
         migrations.AddField(
-            model_name='bankbook',
+            model_name='Bankbook',
             name='bank_shop',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cms.bankshop'),
         ),

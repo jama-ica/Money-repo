@@ -3,72 +3,116 @@
 {% block title %}Monthly{% endblock %}
 
 {% block body %}
-<div>
+<nav class="breadcrumb" aria-label="breadcrumbs">
+	<!--Breadcrumbs-->
+	<ul>
+		<li><a href="{% url 'index' %}">Home</a></li>
+		<li class="is-active"><a href="#" aria-current="page">Monthly</a></li>
+	</ul>
+</nav>
 
-	<div class="select">
-		<select>
-			<option></option>
-			<option>With options</option>
-		</select>
-	</div>
+<!--Overview-->
+<div class="field">
+	<p class="control">
+		<nav class="level">
+			<div class="level-item has-text-right">
+				<div>
+					<p class="heading">Total</p>
+					<p class="title has-text-info">3,456</p>
+				</div>
+			</div>
+			<div class="level-item has-text-right ">
+				<div>
+					<p class="heading">Stock</p>
+					<p class="title has-text-info">123</p>
+				</div>
+			</div>
+			<div class="level-item has-text-right">
+				<div>
+					<p class="heading">Loan</p>
+					<p class="title has-text-danger">456K</p>
+				</div>
+			</div>
+		</nav>
+	</p>
 </div>
 
-  <!--Overview-->
-<nav class="level">
-	<div class="level-item has-text-right">
-		<div>
-		<p class="heading">Revenue </p>
-		<p class="title has-text-info">3,456</p>
-		</div>
-	</div>
-	<div class="level-item has-text-right ">
-		<div>
-		<p class="heading">Income</p>
-		<p class="title has-text-info">123</p>
-		</div>
-	</div>
-	<div class="level-item has-text-right">
-		<div>
-		<p class="heading">Expenses</p>
-		<p class="title has-text-danger">456K</p>
-		</div>
-	</div>
-</nav>
+<!--graph-->
+<canvas id="myLineChart"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script>
+var ctx = document.getElementById("myLineChart");
+var myLineChart = new Chart(ctx, {
+	type: 'line',
+	data: {
+		labels: ['2020.01', '2020.02', '2020.03', '2020.04', '2020.05', '2020.06', '2020.08', '2020.09', '2020.10', '2020.11', '2020.12'],
+		datasets: [
+			{
+				label: 'Total',
+				data: [-25, -27, -27, -25, -26, -27, -25, -27, -27, -25, -26, -27 ],
+				borderColor: "rgba(0,255,255,1)",
+				backgroundColor: "rgba(0,0,0,0)"
+			},
+			{
+				label: 'Stock',
+				data: [35, 34, 37, 35, 34, 35, 35, 34, 37, 35, 34, 35,],
+				borderColor: "rgba(255,0,0,1)",
+				backgroundColor: "rgba(0,0,0,0)"
+			},
+			{
+				label: 'Loan',
+				data: [25, 27, 27, 25, 26, 27, 25, 27, 27, 25, 26, 27,],
+				borderColor: "rgba(0,0,255,1)",
+				backgroundColor: "rgba(0,0,0,0)"
+			},
+		],
+	},
+	options: {
+		//title: {
+		//	display: true,
+		//	text: '気温（8月1日~8月7日）'
+		//},
+		scales: {
+			yAxes: [{
+				ticks: {
+					suggestedMax: 40,
+					suggestedMin: 0,
+					stepSize: 10,
+					callback: function(value, index, values){
+					return  value + 'K'
+					}
+				}
+			}]
+		},
+	}
+});
+</script>
 
 <!--Table-->
 <div class="table-container">
 	<table class="table table is-striped">
 		<thead>
 			<tr>
-				<th>ID</th>
-				<th>Amont</th>
-				<th>Date</th>
-				<th>Kind</th>
-				<th>Note</th>
+				<th>Year</th>
+				<th>Month</th>
+				<th>Total</th>
+				<th>Stock</th>
+				<th>Loan</th>
 			</tr>
 			</thead>
 			<tbody>
+			{% for record in records %}
 			<tr>
-				<th>1</th>
-				<td>38</td>
-				<td>38</td>
-				<td>23</td>
-				<td>12</td>
+				<td>record.year</td>
+				<td>record.month</td>
+				<td>record.total</td>
+				<td>record.stock</td>
+				<!--<td>record.in</td>
+				<td>record.out</td>
+				<td>record.revenue</td>-->
+				<td>record.loan</td>
 			</tr>
-			<tr>
-				<th>1</th>
-				<td>38</td>
-				<td>38</td>
-				<td>23</td>
-				<td>12</td>
-			</tr>
-			<tr>
-				<th>1</th>
-				<td>38</td>
-				<td>23</td>
-				<td>23</td>
-				<td>12</td>
-			</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 </div>

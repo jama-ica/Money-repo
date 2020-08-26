@@ -5,87 +5,88 @@
 
 {% block body %}
 <nav class="breadcrumb" aria-label="breadcrumbs">
-	
 	<!--Breadcrumbs-->
 	<ul>
 		<li><a href="{% url 'index' %}">Home</a></li>
 		<li class="is-active"><a href="#" aria-current="page">Import</a></li>
-		<li class="is-active"><a href="#" aria-current="page">Bank Book</a></li>
+		<li class="is-active"><a href="#" aria-current="page">Bankbook</a></li>
 	</ul>
+</nav>
 
-	<!--Uploader-->
-	<div class="box">
-		<p class="title">Import Bankbook</p>
-		<!--<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">-->
-		<form method="post" enctype="multipart/form-data">
-			{% csrf_token %}
+<!--Uploader-->
+<p class="title">Import Bankbook</p>
+<!--<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">-->
+<form method="post" enctype="multipart/form-data">
+	{% csrf_token %}
 
-			<!--select bank-->
-			<div class="field is-horizontal">
-				<div class="field-label is-normal">
-					<label class="label">Bank</label>
+	<!--select bank-->
+	<div class="field is-horizontal">
+		<div class="field-label is-normal">
+			<label class="label">Bank</label>
+		</div>
+		<div class="field-body">
+			<p class="control">
+				<div class="select">
+					{% for field in form %}
+					{{ field }}
+					{% endfor %}
+					<!--{% csrf_token %}-->
 				</div>
-				<div class="field-body">
-					<p class="control">
-						<div class="select">
-							{% for field in form %}
-							{{ field }}
-							{% endfor %}
-							{% csrf_token %}
-						</div>
-					</p>
-				</div>
-			</div>
-
-			<!--select csv-->
-			<div class="field is-horizontal">
-				<div class="field-label is-normal">
-					<label class="label">Bankbook</label>
-				</div>
-				<div class="field-body">
-					<div class="control">
-						<div id="file-js-example" class="file has-name is-right">
-							<label class="file-label">
-								<input class="file-input" type="file" name="csv">
-									<span class="file-cta">
-										<span class="file-icon">
-											<i class="fas fa-upload"></i>
-										</span>
-										<span class="file-label">
-											Choose a CSV
-										</span>
-									</span>
-									<span class="file-name">
-									</span>
-								</input>
-							</label>
-						</div>
-						<script>
-							const fileInput = document.querySelector('#file-js-example input[type=file]');
-							fileInput.onchange = () => {
-								if (fileInput.files.length > 0) {
-									const fileName = document.querySelector('#file-js-example .file-name');
-									fileName.textContent = fileInput.files[0].name;
-								}
-							}
-						</script>
-					</div>
-				</div>
-			</div>
-
-			<div class="field is-grouped is-grouped-centered">
-				<p class="control">
-					<button type="submit" class="button is-link" name="upload">
-						<span class="icon">
-							<i class="fas fa-file-upload"></i>
-						</span>
-						<span>Upload</span>
-					</button>
-				</p>
-			</div>
-
-		</form>
+			</p>
+		</div>
 	</div>
 
-</nav>
+	<!--select csv-->
+	<div class="field is-horizontal">
+		<div class="field-label is-normal">
+			<label class="label">Bankbook</label>
+		</div>
+		<div class="field-body">
+			<div class="control">
+				<div id="file-js-example" class="file has-name is-right">
+					<label class="file-label">
+						<input class="file-input" type="file" name="csv">
+							<span class="file-cta">
+								<span class="file-icon">
+									<i class="fas fa-upload"></i>
+								</span>
+								<span class="file-label">
+									Choose a CSV
+								</span>
+							</span>
+							<span class="file-name">
+							</span>
+						</input>
+					</label>
+				</div>
+				<script>
+					const fileInput = document.querySelector('#file-js-example input[type=file]');
+					fileInput.onchange = () => {
+						if (fileInput.files.length > 0) {
+							const fileName = document.querySelector('#file-js-example .file-name');
+							fileName.textContent = fileInput.files[0].name;
+						}
+					}
+				</script>
+			</div>
+		</div>
+	</div>
+	
+	<div class="field is-horizontal">
+		<div class="field-label is-normal">
+			<p class="control">
+				<button type="submit" class="button is-link" name="upload">
+					<span class="icon">
+						<i class="fas fa-file-upload"></i>
+					</span>
+					<span>Upload</span>
+				</button>
+			</p>
+		</div>
+		<div class="field-body">
+		</div>
+	</div>
+
+</form>
+
 {% endblock%}

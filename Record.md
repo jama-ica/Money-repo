@@ -528,3 +528,6 @@ https://qiita.com/y_nishimura/items/1427a21967813de26237#%E9%81%B8%E6%8A%9E%E8%8
 
 modelChoiceField
 
+
+## django form calendar
+SelectDateWidget

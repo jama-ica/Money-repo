@@ -9,7 +9,7 @@ class Bank(models.Model):
 		return self.name
 
 
-# BankShop
+# Bank Shop
 class BankShop(models.Model):
 	bank = models.ForeignKey(Bank, on_delete=models.CASCADE)
 	name = models.CharField(blank=False, max_length=64)
@@ -29,7 +29,7 @@ class BankPayee(models.Model):
 		return self.name
 
 
-# BankPaysource
+# Bank Paysource
 class BankPaysource(models.Model):
 	name = models.CharField(blank=False, max_length=64)
 	note = models.CharField(blank=True, max_length=256, editable=True)
@@ -38,8 +38,8 @@ class BankPaysource(models.Model):
 		return self.name
 
 
-# BankBook
-class BankBook(models.Model):
+# Bankbook
+class Bankbook(models.Model):
 	bank_shop = models.ForeignKey(BankShop, on_delete=models.CASCADE)
 	bank_book_number = models.PositiveIntegerField(blank=False)
 	note = models.CharField(blank=True, max_length=256, editable=True)
@@ -48,9 +48,9 @@ class BankBook(models.Model):
 		return str(self.bank_shop) + ' ' + str(self.bank_book_number)
 
 
-# BankBookIn
-class BankBookIn(models.Model):
-	bank_book = models.ForeignKey(BankBook, on_delete=models.CASCADE)
+# Bankbook In
+class BankbookIn(models.Model):
+	bank_book = models.ForeignKey(Bankbook, on_delete=models.CASCADE)
 	bank_payee = models.ForeignKey(BankPayee, on_delete=models.SET_NULL, blank=True, null=True)
 	amount = models.PositiveIntegerField(blank=False)
 	date = models.DateTimeField(blank=False)
@@ -60,9 +60,9 @@ class BankBookIn(models.Model):
 		return str(self.date) + ' ' + str(self.amount)
 
 
-# BankBookOut
-class BankBookOut(models.Model):
-	bank_book = models.ForeignKey(BankBook, on_delete=models.CASCADE)
+# Bankbook Out
+class BankbookOut(models.Model):
+	bank_book = models.ForeignKey(Bankbook, on_delete=models.CASCADE)
 	bank_paysource = models.ForeignKey(BankPaysource, on_delete=models.SET_NULL, blank=True, null=True)
 	amount = models.PositiveIntegerField(blank=False)
 	date = models.DateTimeField(blank=False)
@@ -72,7 +72,7 @@ class BankBookOut(models.Model):
 		return str(self.date) + ' ' + str(self.amount)
 
 
-# IncomeKind
+# Income Kind
 class IncomeKind(models.Model):
 	name = models.CharField(blank=False, max_length=64)
 	note = models.CharField(blank=True, max_length=256, editable=True)
@@ -83,7 +83,7 @@ class IncomeKind(models.Model):
 
 # Income
 class Income(models.Model):
-	bank_book_in = models.ForeignKey(BankBookIn, on_delete=models.CASCADE)
+	bank_book_in = models.ForeignKey(BankbookIn, on_delete=models.CASCADE)
 	income_kind = models.ForeignKey(IncomeKind, on_delete=models.SET_NULL, blank=True, null=True)
 	amount = models.PositiveIntegerField(blank=False)
 	date = models.DateTimeField(blank=False)
@@ -93,7 +93,7 @@ class Income(models.Model):
 		return str(self.amount)
 
 
-# ExpenseKind
+# Expense Kind
 class ExpenseKind(models.Model):
 	name = models.CharField(blank=False, max_length=64)
 	note = models.CharField(blank=True, max_length=256, editable=True)
@@ -102,7 +102,7 @@ class ExpenseKind(models.Model):
 		return self.name
 
 
-# PayMethod
+# Pay Method
 class PayMethod(models.Model):
 	name = models.CharField(blank=False, max_length=64)
 	note = models.CharField(blank=True, max_length=256, editable=True)
@@ -113,7 +113,7 @@ class PayMethod(models.Model):
 
 # Expense
 class Expense(models.Model):
-	bank_book_in = models.ForeignKey(BankBookIn, on_delete=models.CASCADE)
+	bank_book_in = models.ForeignKey(BankbookIn, on_delete=models.CASCADE)
 	expense_kind = models.ForeignKey(ExpenseKind, on_delete=models.SET_NULL, blank=True, null=True)
 	pay_method = models.ForeignKey(PayMethod, on_delete=models.SET_NULL, blank=True, null=True)
 	amount = models.PositiveIntegerField(blank=False)

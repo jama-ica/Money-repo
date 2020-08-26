@@ -18,3 +18,7 @@ from .models import Bank
 class SampleChoiceForm(forms.Form):
 	select = forms.ModelChoiceField(Bank.objects)
 
+class SampleCalenderForm(forms.Form):
+	select = forms.DateField(
+		widget=forms.DateInput(attrs={"type":"month", "class":"input"})
+	)
