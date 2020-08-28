@@ -79,8 +79,12 @@ def importIncomes(request):
 	}
 	return render(request, 'import/incomes.html', context)
 
-def importExpenses(request):
-	return render(request, 'import/expenses.html')
+def importExpenses(request, year, month):
+	context = {
+		'year' : year,
+		'month' : str(month).zfill(2),
+	}
+	return render(request, 'import/expenses.html', context)
 
 # def index(request):
 #     latest_question_list = Question.objects.order_by('-pub_date')[:5]
