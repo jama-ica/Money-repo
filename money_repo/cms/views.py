@@ -73,7 +73,7 @@ def importBankbook(request):
 		return render(request, 'import/Bankbook.html', context)
 
 def importIncomes(request):
-	form = forms.SampleCalenderForm()
+	form = forms.SampleCalenderForm(initial = {'input' : '2020-05'})
 	context = {
 		'form': form,
 	}

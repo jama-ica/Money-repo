@@ -28,8 +28,7 @@ class SampleCalenderForm(forms.Form):
 	#	#widget=forms.DateTimeInput(attrs={"type":"date"})
 	#	widget=forms.SelectDateWidget(attrs={'type': 'month'})
 	#)
-	input = forms.DateTimeField(
-		initial='2019-05',
+	input = forms.DateField(
 		widget=forms.DateInput(attrs={'type': 'month'})
 	)
 	
