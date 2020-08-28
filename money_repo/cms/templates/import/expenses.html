@@ -5,8 +5,15 @@
 
 {% block body %}
 <script>
-function pop(id) {
-	console.log('aaabb' + id);
+openRemoveModal = () => {
+	//document.getElementById("remove-modal").style.visibility = "visible";
+	//document.getElementById("remove-modal").style.display ="block";
+	document.getElementById("remove-modal").classList.add('is-active');
+}
+closeRemoveModal = () => {
+	//document.getElementById("remove-modal").style.visibility = "hidden";
+	//document.getElementById("remove-modal").style.display = "none";
+	document.getElementById("remove-modal").classList.remove('is-active');
 }
 </script>
 
@@ -53,7 +60,7 @@ function pop(id) {
 				<td>{{expense.date.pay_method}}</td>
 				<td>{{expense.amount}}</td>
 				<td>
-					<a class="icon has-text-warning" onclick="pop({{expense.id}})">
+					<a class="icon has-text-warning" onclick="openRemoveModal({{expense.id}})">
 						<i class="fas fa-pen"></i>
 					</a>
 				</td>
@@ -68,13 +75,21 @@ function pop(id) {
 	</table>
 </div>
 
-<div class="modal">
+<div id="remove-modal" class="modal">
 	<div class="modal-background"></div>
-	<div class="modal-content">
-		<!-- Any other Bulma elements you want -->
-		<p>aa</p>
+	<div class="modal-card">
+		<section class="modal-card-body">
+			本当に削除してよろしいですか。
+		</section>
+		<footer class="modal-card-foot">
+			<form action="" method="POST" id="delete-form">
+				{% csrf_token %}
+				<button type="button" class="button is-info" id="delete-cancel-button">キャンセル</button>
+				<button type="submit" class="button is-danger">本当に削除</button>
+			</form>
+		</footer>
 	</div>
-	<button class="modal-close is-large" aria-label="close"></button>
+	<button class="modal-close is-large" aria-label="close" onclick="closeRemoveModal()"></button>
 </div>
 
 {% endblock%}
