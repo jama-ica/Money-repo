@@ -4,6 +4,12 @@
 {% block title %}Import Expenses{% endblock %}
 
 {% block body %}
+<script>
+function pop(id) {
+	console.log('aaabb' + id);
+}
+</script>
+
 <nav class="breadcrumb" aria-label="breadcrumbs">
 	<!--Breadcrumbs-->
 	<ul>
@@ -15,11 +21,15 @@
 
 <div class="field">
 	<div class="field-body">
-		<p class="control">
-			<input type="month" class="input" min="2014-01" max="2015-12" value="{{ year }}-{{ month }}" onchange="console.log('aaa')"></input>
+		<p class="control is-medium">
+			<input type="month" class="input" value="{{ year }}-{{ month }}" onchange="console.log('aaa')"></input>
 		</p>
 	</div>
 </div>
+
+<p>
+	{{total}}
+</p>
 
 <!--Table-->
 <div class="table-container">
@@ -27,29 +37,44 @@
 		<thead>
 			<tr>
 				<th>Id</th>
-				<th>Year</th>
 				<th>Month</th>
-				<th>Total</th>
-				<th>Stock</th>
-				<th>Loan</th>
+				<th>Day</th>
+				<th>Kind</th>
+				<th>Amount</th>
+				<th></th>
 			</tr>
 			</thead>
 			<tbody>
-			{% for record in records %}
+			{% for expense in expenses %}
 			<tr>
-				<td>record.id</td>
-				<td>record.year</td>
-				<td>record.month</td>
-				<td>record.total</td>
-				<td>record.stock</td>
-				<!--<td>record.in</td>
-				<td>record.out</td>
-				<td>record.revenue</td>-->
-				<td>record.loan</td>
+				<td>{{expense.id}}</td>
+				<td>{{expense.date.year}}/{{expense.date.month}}</td>
+				<td>{{expense.date.day}}</td>
+				<td>{{expense.date.pay_method}}</td>
+				<td>{{expense.amount}}</td>
+				<td>
+					<a class="icon has-text-warning" onclick="pop({{expense.id}})">
+						<i class="fas fa-pen"></i>
+					</a>
+				</td>
+				<td>
+					<a class="icon has-text-danger">
+						<i class="fas fa-times"></i>
+					</a>
+				</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
+</div>
+
+<div class="modal">
+	<div class="modal-background"></div>
+	<div class="modal-content">
+		<!-- Any other Bulma elements you want -->
+		<p>aa</p>
+	</div>
+	<button class="modal-close is-large" aria-label="close"></button>
 </div>
 
 {% endblock%}

@@ -7,6 +7,7 @@ from . import forms
 import datetime
 import csv
 from io import TextIOWrapper, StringIO
+from django.db.models import Sum
 # 
 from .models import BankPayee
 from .models import BankPaysource
@@ -82,14 +83,18 @@ def importIncomes(request):
 	}
 	return render(request, 'import/incomes.html', context)
 
-def importExpensesThisYear(request):
+def importExpensesThisMonth(request):
 	dt_now = datetime.datetime.now()
 	return redirect('expenses', year=dt_now.year, month=dt_now.month)
 
 def importExpenses(request, year, month):
+	sum = BankbookOut.objects.filter(date__year=year, date__month=month).aggregate(Sum('amount'))
+	expenses = Expense.objects.filter(date__year=year, date__month=month)
 	context = {
 		'year' : year,
 		'month' : str(month).zfill(2),
+		'total' : sum['amount__sum'],
+		'expenses' : expenses,
 	}
 	return render(request, 'import/expenses.html', context)
 

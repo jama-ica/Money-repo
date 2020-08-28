@@ -17,7 +17,7 @@ urlpatterns = [
 	path('incomes', views.importIncomes, name='incomes'),
 
 	# expenses
-	path('expenses-this-year/', views.importExpensesThisYear, name='expenses-this-year'),
+	path('expenses-this-month/', views.importExpensesThisMonth, name='expenses-this-month'),
 	path('expenses/<int:year>/<int:month>/', views.importExpenses, name='expenses'),
 
 	path('upload/', views.upload, name='upload'), # import Bankbook

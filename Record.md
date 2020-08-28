@@ -536,3 +536,6 @@ SelectDateWidget
 https://docs.djangoproject.com/en/3.1/ref/forms/fields/
 
 https://blog.narito.ninja/detail/83/
+
+## django で model 集計
+https://blog.narito.ninja/detail/84/
