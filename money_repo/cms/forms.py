@@ -1,6 +1,7 @@
 from django import forms
 #
 from .models import Bank
+import datetime
 
 #class SampleChoiceForm(forms.Form):
 #	select = forms.fields.ChoiceField(
@@ -19,6 +20,16 @@ class SampleChoiceForm(forms.Form):
 	select = forms.ModelChoiceField(Bank.objects)
 
 class SampleCalenderForm(forms.Form):
-	select = forms.DateField(
-		widget=forms.DateInput(attrs={"type":"month", "class":"input"})
+	#input = forms.DateTimeField(
+	#	#label='所有者',
+	#	initial=datetime.date.today,
+	#	#error_messages={'required': 'Please enter your name'},
+	#	#help_text='A valid email address, please.',
+	#	#widget=forms.DateTimeInput(attrs={"type":"date"})
+	#	widget=forms.SelectDateWidget(attrs={'type': 'month'})
+	#)
+	input = forms.DateTimeField(
+		initial='2019-05',
+		widget=forms.DateInput(attrs={'type': 'month'})
 	)
+	

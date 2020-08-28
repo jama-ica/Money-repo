@@ -531,3 +531,8 @@ modelChoiceField
 
 ## django form calendar
 SelectDateWidget
+
+## django form fields
+https://docs.djangoproject.com/en/3.1/ref/forms/fields/
+
+https://blog.narito.ninja/detail/83/
