@@ -21,6 +21,9 @@ from .models import ExpenseKind
 from .models import PayMethod
 from .models import Expense
 
+def top(request):
+	return redirect('index')
+
 def index(request):
 	return render(request, 'index.html')
 
@@ -78,6 +81,10 @@ def importIncomes(request):
 		'form': form,
 	}
 	return render(request, 'import/incomes.html', context)
+
+def importExpensesThisYear(request):
+	dt_now = datetime.datetime.now()
+	return redirect('expenses', year=dt_now.year, month=dt_now.month)
 
 def importExpenses(request, year, month):
 	context = {
