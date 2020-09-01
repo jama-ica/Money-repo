@@ -44,6 +44,12 @@ closeRemoveModal = () => {
 	//document.getElementById("remove-modal").style.display = "none";
 	document.getElementById("remove-modal").classList.remove('is-active');
 }
+
+moveTo = () => {
+	var input = document.getElementById('month-input');
+	year_month = input.value.split('-')
+	location.href="../../" + year_month[0] + "/" + year_month[1];
+}
 </script>
 
 <nav class="breadcrumb" aria-label="breadcrumbs">
@@ -58,14 +64,10 @@ closeRemoveModal = () => {
 <div class="field">
 	<div class="field-body">
 		<p class="control is-medium">
-			<input type="month" class="input" value="{{ year }}-{{ month }}" onchange="console.log('aaa')"></input>
+			<input type="month" class="input" id="month-input" value="{{ year }}-{{ month }}" onChange="moveTo()"></input>
 		</p>
 	</div>
 </div>
-
-<p>
-	{{total}}
-</p>
 
 <!--Table-->
 <div class="table-container">

@@ -108,7 +108,8 @@ def importExpensesModify(request, year, month, expense_id):
 	return redirect('expenses', year=year, month=month)
 
 def importExpensesDelete(request, year, month, expense_id):
-	Expense.objects.filter(id=expense_id)
+	expense = Expense.objects.get(id=expense_id)
+	expense.delete()
 	return redirect('expenses', year=year, month=month)
 
 
