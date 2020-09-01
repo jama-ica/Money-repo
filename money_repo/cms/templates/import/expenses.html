@@ -5,9 +5,38 @@
 
 {% block body %}
 <script>
-openRemoveModal = () => {
+// add modal
+openAddModal = (expense_id) => {
+	document.getElementById("add-modal").classList.add('is-active');
+}
+closeAddModal = () => {
+	document.getElementById("add-modal").classList.remove('is-active');
+}
+
+// modify modal
+openModifyModal = (expense_id, expense_kind, amount) => {
+	// input amount
+	var inputAmount = document.getElementById('modify-modal-amount');
+	inputAmount.value = amount;
+	// select kind
+	var selectKind = document.getElementById('modify-modal-select-kind');
+	selectKind.value = expense_kind;
+	// action
+	var form = document.getElementById('modify-form');
+	form.action = "modify/" + expense_id;
+	// visible
+	document.getElementById("modify-modal").classList.add('is-active');
+}
+closeModifyModal = () => {
+	document.getElementById("modify-modal").classList.remove('is-active');
+}
+
+// remove modal
+openRemoveModal = (expense_id) => {
 	//document.getElementById("remove-modal").style.visibility = "visible";
 	//document.getElementById("remove-modal").style.display ="block";
+	var form = document.getElementById('remove-form');
+	form.action = "delete/" + expense_id;
 	document.getElementById("remove-modal").classList.add('is-active');
 }
 closeRemoveModal = () => {
@@ -48,44 +77,120 @@ closeRemoveModal = () => {
 				<th>Day</th>
 				<th>Kind</th>
 				<th>Amount</th>
+				<th>Note</th>
 				<th></th>
 			</tr>
-			</thead>
-			<tbody>
+		</thead>
+		<tbody>
 			{% for expense in expenses %}
-			<tr>
-				<td>{{expense.id}}</td>
-				<td>{{expense.date.year}}/{{expense.date.month}}</td>
-				<td>{{expense.date.day}}</td>
-				<td>{{expense.date.pay_method}}</td>
-				<td>{{expense.amount}}</td>
-				<td>
-					<a class="icon has-text-warning" onclick="openRemoveModal({{expense.id}})">
-						<i class="fas fa-pen"></i>
-					</a>
-				</td>
-				<td>
-					<a class="icon has-text-danger">
-						<i class="fas fa-times"></i>
-					</a>
-				</td>
-			</tr>
+				<tr>
+					<td>{{expense.id}}</td>
+					<td>{{expense.date.year}}/{{expense.date.month}}</td>
+					<td>{{expense.date.day}}</td>
+					<td>{{expense.expense_kind}}</td>
+					<td>{{expense.amount}}</td>
+					<td>{{expense.note}}</td>
+					<td>
+						<a class="icon has-text-warning" onclick="openModifyModal({{expense.id}}, '{{expense.expense_kind}}', {{expense.amount}})">
+							<i class="fas fa-pen"></i>
+						</a>
+					</td>
+					<td>
+						<a class="icon has-text-danger" onclick="openRemoveModal({{expense.id}})">
+							<i class="fas fa-times"></i>
+						</a>
+					</td>
+				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
+</div>
+
+<div id="add-modal" class="modal">
+	<div class="modal-background"></div>
+	<div class="modal-card">
+		<section class="modal-card-body">
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					<label class="label">To</label>
+				</div>
+				<div class="field-body">
+					<div class="field">
+						<p class="control">
+							<input class="input" type="email" placeholder="Recipient email">
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer class="modal-card-foot">
+			<form method="POST" action="" id="delete-form">
+				{% csrf_token %}
+				<button type="button" class="button" onclick="closeAddModal()">Cancel</button>
+				<button type="submit" class="button is-danger">Save</button>
+			</form>
+		</footer>
+	</div>
+	<button class="modal-close is-large" aria-label="close" onclick="closeAddModal()"></button>
+</div>
+
+<div id="modify-modal" class="modal">
+	<div class="modal-background"></div>
+	<div class="modal-card">
+		<form method="POST" id="modify-form">
+			<section class="modal-card-body">
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">Amount</label>
+					</div>
+					<div class="field-body">
+						<div class="field">
+							<p class="control">
+								<input class="input" id="modify-modal-amount" name='amount'>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">Kind</label>
+					</div>
+					<div class="field-body">
+						<div class="field">
+							<p class="control">
+								<div class="select">
+									<select id="modify-modal-select-kind" name='expense_kind'>
+										{% for expenseKind in expenseKinds %}
+											<option>{{expenseKind}}</option>
+										{% endfor %}
+									</select>
+								</div>
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<footer class="modal-card-foot">
+				{% csrf_token %}
+				<button type="button" class="button" onclick="closeModifyModal()">Cancel</button>
+				<button type="submit" class="button is-danger">Save</button>
+			</footer>
+		</form>
+	</div>
+	<button class="modal-close is-large" aria-label="close" onclick="closeModifyModal()"></button>
 </div>
 
 <div id="remove-modal" class="modal">
 	<div class="modal-background"></div>
 	<div class="modal-card">
 		<section class="modal-card-body">
-			本当に削除してよろしいですか。
+			Are you sure you want to delete this item?
 		</section>
 		<footer class="modal-card-foot">
-			<form action="" method="POST" id="delete-form">
+			<form method="POST" id="remove-form" >
 				{% csrf_token %}
-				<button type="button" class="button is-info" id="delete-cancel-button">キャンセル</button>
-				<button type="submit" class="button is-danger">本当に削除</button>
+				<button type="button" class="button" onclick="closeRemoveModal()">Cancel</button>
+				<button type="submit" class="button is-danger">Delete</button>
 			</form>
 		</footer>
 	</div>

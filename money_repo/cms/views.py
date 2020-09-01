@@ -90,29 +90,35 @@ def importExpensesThisMonth(request):
 def importExpenses(request, year, month):
 	sum = BankbookOut.objects.filter(date__year=year, date__month=month).aggregate(Sum('amount'))
 	expenses = Expense.objects.filter(date__year=year, date__month=month)
+	expenseKinds = ExpenseKind.objects.all()
 	context = {
 		'year' : year,
 		'month' : str(month).zfill(2),
 		'total' : sum['amount__sum'],
 		'expenses' : expenses,
+		'expenseKinds' : expenseKinds,
 	}
 	return render(request, 'import/expenses.html', context)
+
+def importExpensesModify(request, year, month, expense_id):
+	expense = Expense.objects.get(id=expense_id)
+	expense.amount = request.POST['amount']
+	expense.expense_kind = ExpenseKind.objects.get(name=request.POST['expense_kind'])
+	expense.save()
+	return redirect('expenses', year=year, month=month)
+
+def importExpensesDelete(request, year, month, expense_id):
+	Expense.objects.filter(id=expense_id)
+	return redirect('expenses', year=year, month=month)
+
 
 # def index(request):
 #     latest_question_list = Question.objects.order_by('-pub_date')[:5]
 #     context = {'latest_question_list': latest_question_list}
 #     return render(request, 'polls/index.html', context)
 
-
-def detail(request, question_id):
-	return HttpResponse("You're looking at question %s." % question_id)
-
-def results(request, question_id):
-	response = "You're looking at the results of question %s."
-	return HttpResponse(response % question_id)
-
-def vote(request, question_id):
-	return HttpResponse("You're voting on question %s." % question_id)
+def creditCard(request):
+	return HttpResponse("credit")
 
 
 #TODO rename import/bankbook 
