@@ -87,16 +87,56 @@ def importExpensesThisMonth(request):
 	dt_now = datetime.datetime.now()
 	return redirect('expenses', year=dt_now.year, month=dt_now.month)
 
+class ExpenseDetail():
+	def __init__(self):
+		self.id = ''
+		self.type = ''
+		self.bankbook_out = 0
+		self.date = ''
+		self.amount = 0
+		self.expense_kind = ''
+		self.note = ''
+
+
 def importExpenses(request, year, month):
-	sum = BankbookOut.objects.filter(date__year=year, date__month=month).aggregate(Sum('amount'))
 	expenses = Expense.objects.filter(date__year=year, date__month=month)
+	bankbookOuts = BankbookOut.objects.filter(date__year=year, date__month=month)
 	expenseKinds = ExpenseKind.objects.all()
+	#sum = BankbookOut.objects.filter(date__year=year, date__month=month).aggregate(Sum('amount'))
+	#'total' : sum['amount__sum'],
+
+	list = []
+	for bankbookOut in bankbookOuts:
+		expenseSum = 0
+		for expense in expenses:
+			if expense.bankbook_out == bankbookOut:
+				item = ExpenseDetail()
+				item.id = expense.id
+				item.type = 'expense'
+				item.bankbook_out = expense.bankbook_out
+				item.date = expense.date
+				item.amount = expense.amount
+				item.expense_kind = expense.expense_kind
+				item.note = expense.note
+				list.append(item)
+				expenseSum += expense.amount
+		# rest
+		if expenseSum < bankbookOut.amount:
+			item = ExpenseDetail()
+			item.id = 0
+			item.type = 'bankbook'
+			item.bankbook_out = bankbookOut
+			item.date = bankbookOut.date
+			item.amount = bankbookOut.amount - expenseSum
+			item.expense_kind = 'others'
+			item.note = bankbookOut.note
+			list.append(item)
+
 	context = {
 		'year' : year,
 		'month' : str(month).zfill(2),
-		'total' : sum['amount__sum'],
-		'expenses' : expenses,
 		'expenseKinds' : expenseKinds,
+		'expenses' : list,
 	}
 	return render(request, 'import/expenses.html', context)
 
@@ -112,6 +152,15 @@ def importExpensesDelete(request, year, month, expense_id):
 	expense.delete()
 	return redirect('expenses', year=year, month=month)
 
+def importExpensesAdd(request, year, month, bankbook_out):
+	expense = Expense()
+	expense.bankbook_out = BankbookOut.objects.get(id=bankbook_out)
+	expense.expense_kind = ExpenseKind.objects.get(name=request.POST['expense_kind'])
+	# pay_method
+	expense.amount = request.POST['amount']
+	expense.date = BankbookOut.objects.get(id=bankbook_out).date
+	expense.save()
+	return redirect('expenses', year=year, month=month)
 
 # def index(request):
 #     latest_question_list = Question.objects.order_by('-pub_date')[:5]

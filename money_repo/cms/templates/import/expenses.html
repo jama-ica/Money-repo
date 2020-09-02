@@ -6,7 +6,16 @@
 {% block body %}
 <script>
 // add modal
-openAddModal = (expense_id) => {
+openAddModal = (bankbook_out_id, amount) => {
+	// input amount
+	var inputAmount = document.getElementById('add-modal-amount');
+	inputAmount.value = amount;
+	// select kind
+	var selectKind = document.getElementById('add-modal-select-kind');
+	// action
+	var form = document.getElementById('add-form');
+	form.action = "add/" + bankbook_out_id;
+	// visible
 	document.getElementById("add-modal").classList.add('is-active');
 }
 closeAddModal = () => {
@@ -74,7 +83,7 @@ moveTo = () => {
 	<table class="table table is-striped">
 		<thead>
 			<tr>
-				<th>Id</th>
+				<th>Bankbook Out</th>
 				<th>Month</th>
 				<th>Day</th>
 				<th>Kind</th>
@@ -85,25 +94,54 @@ moveTo = () => {
 		</thead>
 		<tbody>
 			{% for expense in expenses %}
-				<tr>
-					<td>{{expense.id}}</td>
-					<td>{{expense.date.year}}/{{expense.date.month}}</td>
-					<td>{{expense.date.day}}</td>
-					<td>{{expense.expense_kind}}</td>
-					<td>{{expense.amount}}</td>
-					<td>{{expense.note}}</td>
-					<td>
-						<a class="icon has-text-warning" onclick="openModifyModal({{expense.id}}, '{{expense.expense_kind}}', {{expense.amount}})">
-							<i class="fas fa-pen"></i>
-						</a>
-					</td>
-					<td>
-						<a class="icon has-text-danger" onclick="openRemoveModal({{expense.id}})">
-							<i class="fas fa-times"></i>
-						</a>
-					</td>
-				</tr>
+			<tr>
+				<td>{{expense.bankbook_out.id}}</td>
+				<td>{{expense.date.year}}.{{expense.date.month}}</td>
+				<td>{{expense.date.day}}</td>
+				<td>{{expense.expense_kind}}</td>
+				<td>{{expense.amount}}</td>
+				<td>{{expense.note}}</td>
+				{% if expense.type == 'expense' %}
+				<td>
+					<a class="icon has-text-warning" onclick="openModifyModal({{expense.id}}, '{{expense.expense_kind}}', {{expense.amount}})">
+						<i class="fas fa-pen"></i>
+					</a>
+				</td>
+				<td>
+					<a class="icon has-text-danger" onclick="openRemoveModal({{expense.id}})">
+						<i class="fas fa-times"></i>
+					</a>
+				</td>
+				{% elif expense.type == 'bankbook' %}
+				<td>
+					<a class="icon has-text-warning" onclick="openAddModal({{expense.bankbook_out.id}}, {{expense.amount}})">
+						<i class="fas fa-plus"></i>
+					</a>
+				</td>
+				<td>
+				</td>
+				{% endif %}
+
+			</tr>
 			{% endfor %}
+			<!--<tr>
+				<td></td>
+				<td>{{expense.date.year}}.{{expense.date.month}}</td>
+				<td>{{expense.date.day}}</td>
+				<td>Others</td>
+				<td>{{expense.amount}}</td>
+				<td></td>
+				<td>
+					<a class="icon has-text-warning" onclick="openModifyModal({{expense.id}}, '{{expense.expense_kind}}', {{expense.amount}})">
+						<i class="fas fa-pen"></i>
+					</a>
+				</td>
+				<td>
+					<a class="icon has-text-danger" onclick="openRemoveModal({{expense.id}})">
+						<i class="fas fa-times"></i>
+					</a>
+				</td>
+			</tr>-->
 		</tbody>
 	</table>
 </div>
@@ -111,27 +149,45 @@ moveTo = () => {
 <div id="add-modal" class="modal">
 	<div class="modal-background"></div>
 	<div class="modal-card">
-		<section class="modal-card-body">
-			<div class="field is-horizontal">
-				<div class="field-label is-normal">
-					<label class="label">To</label>
-				</div>
-				<div class="field-body">
-					<div class="field">
-						<p class="control">
-							<input class="input" type="email" placeholder="Recipient email">
-						</p>
+		<form method="POST" id="add-form">
+			<section class="modal-card-body">
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">Amount</label>
+					</div>
+					<div class="field-body">
+						<div class="field">
+							<p class="control">
+								<input class="input" id="add-modal-amount" name='amount'>
+							</p>
+						</div>
 					</div>
 				</div>
-			</div>
-		</section>
-		<footer class="modal-card-foot">
-			<form method="POST" action="" id="delete-form">
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">Kind</label>
+					</div>
+					<div class="field-body">
+						<div class="field">
+							<p class="control">
+								<div class="select">
+									<select id="add-modal-select-kind" name='expense_kind'>
+										{% for expenseKind in expenseKinds %}
+											<option>{{expenseKind}}</option>
+										{% endfor %}
+									</select>
+								</div>
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<footer class="modal-card-foot">
 				{% csrf_token %}
 				<button type="button" class="button" onclick="closeAddModal()">Cancel</button>
 				<button type="submit" class="button is-danger">Save</button>
-			</form>
-		</footer>
+			</footer>
+		</form>
 	</div>
 	<button class="modal-close is-large" aria-label="close" onclick="closeAddModal()"></button>
 </div>

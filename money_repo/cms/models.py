@@ -41,19 +41,19 @@ class BankPaysource(models.Model):
 # Bankbook
 class Bankbook(models.Model):
 	bank_shop = models.ForeignKey(BankShop, on_delete=models.CASCADE)
-	bank_book_number = models.PositiveIntegerField(blank=False)
+	bankbook_number = models.PositiveIntegerField(blank=False)
 	note = models.CharField(blank=True, max_length=256, editable=True)
 
 	def __str__(self):
-		return str(self.bank_shop) + ' ' + str(self.bank_book_number)
+		return str(self.bank_shop) + ' ' + str(self.bankbook_number)
 
 
 # Bankbook In
 class BankbookIn(models.Model):
-	bank_book = models.ForeignKey(Bankbook, on_delete=models.CASCADE)
+	bankbook = models.ForeignKey(Bankbook, on_delete=models.CASCADE)
 	bank_payee = models.ForeignKey(BankPayee, on_delete=models.SET_NULL, blank=True, null=True)
 	amount = models.PositiveIntegerField(blank=False)
-	date = models.DateTimeField(blank=False)
+	date = models.DateField(blank=False)
 	note = models.CharField(blank=True, max_length=256, editable=True)
 
 	def __str__(self):
@@ -62,10 +62,10 @@ class BankbookIn(models.Model):
 
 # Bankbook Out
 class BankbookOut(models.Model):
-	bank_book = models.ForeignKey(Bankbook, on_delete=models.CASCADE)
+	bankbook = models.ForeignKey(Bankbook, on_delete=models.CASCADE)
 	bank_paysource = models.ForeignKey(BankPaysource, on_delete=models.SET_NULL, blank=True, null=True)
 	amount = models.PositiveIntegerField(blank=False)
-	date = models.DateTimeField(blank=False)
+	date = models.DateField(blank=False)
 	note = models.CharField(blank=True, max_length=256, editable=True)
 
 	def __str__(self):
@@ -83,10 +83,10 @@ class IncomeKind(models.Model):
 
 # Income
 class Income(models.Model):
-	bank_book_in = models.ForeignKey(BankbookIn, on_delete=models.CASCADE)
+	bankbook_in = models.ForeignKey(BankbookIn, on_delete=models.CASCADE)
 	income_kind = models.ForeignKey(IncomeKind, on_delete=models.SET_NULL, blank=True, null=True)
 	amount = models.PositiveIntegerField(blank=False)
-	date = models.DateTimeField(blank=False)
+	date = models.DateField(blank=False)
 	note = models.CharField(blank=True, max_length=256, editable=True)
 
 	def __str__(self):
@@ -113,11 +113,11 @@ class PayMethod(models.Model):
 
 # Expense
 class Expense(models.Model):
-	bank_book_in = models.ForeignKey(BankbookIn, on_delete=models.CASCADE)
+	bankbook_out = models.ForeignKey(BankbookOut, on_delete=models.CASCADE)
 	expense_kind = models.ForeignKey(ExpenseKind, on_delete=models.SET_NULL, blank=True, null=True)
 	pay_method = models.ForeignKey(PayMethod, on_delete=models.SET_NULL, blank=True, null=True)
 	amount = models.PositiveIntegerField(blank=False)
-	date = models.DateTimeField(blank=False)
+	date = models.DateField(blank=False)
 	note = models.CharField(blank=True, max_length=256, editable=True)
 
 	def __str__(self):

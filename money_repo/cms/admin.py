@@ -49,24 +49,24 @@ admin.site.register(BankPaysource, BankPaysourceAdmin)
 
 # Bankbook
 class BankbookAdmin(admin.ModelAdmin):
-	list_display = ('id', 'bank_shop', 'bank_book_number', 'note',)
-	list_display_links = ('id', 'bank_shop', 'bank_book_number', 'note',)
+	list_display = ('id', 'bank_shop', 'bankbook_number', 'note',)
+	list_display_links = ('id', 'bank_shop', 'bankbook_number', 'note',)
 
 admin.site.register(Bankbook, BankbookAdmin)
 
 
 # BankbookIn
 class BankbookInAdmin(admin.ModelAdmin):
-	list_display = ('id', 'bank_book', 'bank_payee', 'amount', 'date', 'note',)
-	list_display_links = ('id', 'bank_book', 'bank_payee', 'amount', 'date', 'note',)
+	list_display = ('id', 'bankbook', 'bank_payee', 'amount', 'date', 'note',)
+	list_display_links = ('id', 'bankbook', 'bank_payee', 'amount', 'date', 'note',)
 
 admin.site.register(BankbookIn, BankbookInAdmin)
 
 
 # BankbookOut
 class BankbookOutAdmin(admin.ModelAdmin):
-	list_display = ('id', 'bank_book', 'bank_paysource', 'amount', 'date', 'note',)
-	list_display_links = ('id', 'bank_book', 'bank_paysource', 'amount', 'date', 'note',)
+	list_display = ('id', 'bankbook', 'bank_paysource', 'amount', 'date', 'note',)
+	list_display_links = ('id', 'bankbook', 'bank_paysource', 'amount', 'date', 'note',)
 
 admin.site.register(BankbookOut, BankbookOutAdmin)
 
@@ -81,8 +81,8 @@ admin.site.register(IncomeKind, IncomeKindAdmin)
 
 # Income
 class IncomeAdmin(admin.ModelAdmin):
-	list_display = ('id', 'bank_book_in', 'income_kind', 'amount', 'date', 'note',)
-	list_display_links = ('id', 'bank_book_in', 'income_kind', 'amount', 'date', 'note',)
+	list_display = ('id', 'bankbook_in', 'income_kind', 'amount', 'date', 'note',)
+	list_display_links = ('id', 'bankbook_in', 'income_kind', 'amount', 'date', 'note',)
 
 admin.site.register(Income, IncomeAdmin)
 
@@ -105,8 +105,8 @@ admin.site.register(PayMethod, PayMethodAdmin)
 
 # Expense
 class ExpenseAdmin(admin.ModelAdmin):
-	list_display = ('id', 'bank_book_in', 'expense_kind', 'pay_method', 'amount', 'date', 'note',)
-	list_display_links = ('id', 'bank_book_in', 'expense_kind', 'pay_method', 'amount', 'date', 'note',)
+	list_display = ('id', 'bankbook_out', 'expense_kind', 'pay_method', 'amount', 'date', 'note',)
+	list_display_links = ('id', 'bankbook_out', 'expense_kind', 'pay_method', 'amount', 'date', 'note',)
 
 admin.site.register(Expense, ExpenseAdmin)
 
